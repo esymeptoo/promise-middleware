@@ -25,11 +25,12 @@ class PromiseMiddleware {
     let promise = Promise.resolve(options)
     const middlewareChains = []
     this.middlewares.forEach((m = { fulfilled: res => res, rejected: res => res }) => {
-      middlewareChains.push(m.fulfilled, m.rejected)
+      middlewareChains.push([m.fulfilled, m.rejected])
     })
+    console.log(middlewareChains)
     const chains = [...middlewareChains, ...DEFAULT_MIDDLEWARE]
     while (chains.length) {
-      promise = promise.then(chains.shift(), chains.shift())
+      promise = promise.then(...chains.shift())
     }
     return promise
   }

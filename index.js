@@ -27,7 +27,6 @@ class PromiseMiddleware {
     this.middlewares.forEach((m = { fulfilled: res => res, rejected: res => res }) => {
       middlewareChains.push([m.fulfilled, m.rejected])
     })
-    console.log(middlewareChains)
     const chains = [...middlewareChains, ...DEFAULT_MIDDLEWARE]
     while (chains.length) {
       promise = promise.then(...chains.shift())
